@@ -3,7 +3,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Compresion {
-    public static String[] comprime(String cadena) {
+
+    public static class ResultadoCompresion {
+        public String textoComprimido;
+        public List<String> diccionario;
+
+        public ResultadoCompresion(String textoComprimido, List<String> diccionario) {
+            this.textoComprimido = textoComprimido;
+            this.diccionario = diccionario;
+        }
+    }
+
+    public static ResultadoCompresion comprime(String cadena) {
         List<String> diccionario = new ArrayList<>();
         List<String> resultado = new ArrayList<>();
         int posicionActual = 0;
@@ -42,7 +53,7 @@ public class Compresion {
             }
         }
 
-        return new String[] { String.join("", resultado), diccionario.toString() };
+        return new ResultadoCompresion(String.join("", resultado), diccionario);
     }
 
     public static void main(String[] args) {
@@ -51,15 +62,15 @@ public class Compresion {
         System.out.println("Ingrese la cadena a comprimir:");
         String cadena = scanner.nextLine();
 
-        String[] resultado = comprime(cadena);
+        ResultadoCompresion resultado = comprime(cadena);
 
         System.out.println("El resultado comprimido es:");
-        System.out.println(resultado[0]);
+        System.out.println(resultado.textoComprimido);
 
         System.out.println("El diccionario es:");
-        String[] diccionario = resultado[1].replace("[", "").replace("]", "").split(", ");
-        for (int i = 0; i < diccionario.length; i++) {
-            System.out.println((i + 1) + ":" + diccionario[i]);
+        List<String> dicc = resultado.diccionario; 
+        for (int i = 0; i < dicc.size(); i++) {
+            System.out.println((i + 1) + ":" + dicc.get(i));
         }
 
         scanner.close();
